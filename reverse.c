@@ -2,7 +2,8 @@
 
 void reverse(char* str)
 {
-	//unsigned int size = sizeof(*str) / sizeof(str[0]);
+	// version 1
+	/*
 	unsigned int size = 0;
 	char* p = str;
 	while (*(p++) != '\0')
@@ -14,6 +15,27 @@ void reverse(char* str)
 		*(str + i) = *(str + size - i - 1);
 		*(str + size - i - 1) = tmp;
 	}
+	*/
+
+	// version 2
+	///*
+	char* end = str;
+	char tmp;
+	if (str) {
+		while (*end) { // 找出字串尾端
+			++end;
+		}
+		--end; // 往回一個字元，因為最後為 null
+		
+		// 前後互相交換
+		while (str < end) {
+			tmp = *str;
+			*str++ = *end;
+			*end-- = tmp;
+		}
+
+	}
+	//*/
 }
 
 int main()
