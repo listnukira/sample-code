@@ -4,11 +4,11 @@ using namespace std;
 
 int removeDuplicates(int A[], int n)
 {
-    int val = 0, len = 0;
+    int len = 0;
     for (int i = 0; i < n; i++) {
 
-        if (len == 0 || (val ^ A[i]) != 0) {
-            A[len++] = val = A[i];
+        if (len == 0 || (A[len - 1] ^ A[i]) != 0) {
+            A[len++] = A[i];
         }
     }
 
