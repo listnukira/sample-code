@@ -8,24 +8,28 @@ struct ListNode {
     ListNode(int x): val(x), next(NULL) {}
 };
 
-bool hasCycle(ListNode *head)
-{
-    struct ListNode* fast = head;
-    struct ListNode* slow = head;
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        struct ListNode* fast = head;
+        struct ListNode* slow = head;
 
-    while (fast != NULL && fast->next != NULL) {
-        fast = fast->next->next;
-        slow = slow->next;
+        while (fast != NULL && fast->next != NULL) {
+            fast = fast->next->next;
+            slow = slow->next;
 
-        if (fast == slow)
-            return true;
+            if (fast == slow)
+                return true;
+        }
+
+        return false;
     }
+};
 
-    return false;
-}
 
 int main(int argc, char const* argv[])
 {
+    Solution solution;
     struct ListNode* head;
     struct ListNode node1(1);
     struct ListNode node2(2);
@@ -37,7 +41,7 @@ int main(int argc, char const* argv[])
     node2.next = &node3;
     node3.next = &node4;
 
-    cout << hasCycle(head) << endl;
+    cout << solution.hasCycle(head) << endl;
 
     
     return 0;

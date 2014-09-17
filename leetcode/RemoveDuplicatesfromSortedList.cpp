@@ -8,25 +8,29 @@ struct ListNode {
     ListNode(int x): val(x), next(NULL) {}
 };
 
-ListNode* deleteDuplicates(ListNode *head)
-{
-    struct ListNode *current = head;
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode *head) {
+        struct ListNode *current = head;
 
-    if (head == NULL)
+        if (head == NULL)
+            return head;
+
+        while (current->next != NULL) {
+            if (current->val == current->next->val)
+                current->next = current->next->next;
+            else
+                current = current->next;
+        }
+
         return head;
-
-    while (current->next != NULL) {
-        if (current->val == current->next->val)
-            current->next = current->next->next;
-        else
-            current = current->next;
     }
+};
 
-    return head;
-}
 
 int main(int argc, char const* argv[])
 {
+    Solution solution;
     struct ListNode *head, *current;
     struct ListNode node1(1);
     struct ListNode node2(1);
@@ -40,7 +44,7 @@ int main(int argc, char const* argv[])
     node3.next = &node4;
     node4.next = &node5;
 
-    current = deleteDuplicates(head);
+    current = solution.deleteDuplicates(head);
     while (current != NULL) {
         cout << current->val << " ";
         current = current->next;

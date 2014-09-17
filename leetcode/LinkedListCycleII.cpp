@@ -8,33 +8,37 @@ struct ListNode {
     ListNode(int x): val(x), next(NULL) {}
 };
 
-ListNode* detectCycle(ListNode *head)
-{
-    struct ListNode* fast = head;
-    struct ListNode* slow = head;
+class Solution {
+public:
+    ListNode* detectCycle(ListNode *head) {
+        struct ListNode* fast = head;
+        struct ListNode* slow = head;
 
-    while (fast != NULL && fast->next != NULL) {
-        fast = fast->next->next;
-        slow = slow->next;
+        while (fast != NULL && fast->next != NULL) {
+            fast = fast->next->next;
+            slow = slow->next;
 
-        if (fast == slow)
-            break;
+            if (fast == slow)
+                break;
+        }
+
+        if (fast == NULL || fast->next == NULL)
+            return NULL;
+
+        slow = head;
+        while (slow != fast) {
+            fast = fast->next;
+            slow = slow->next;
+        }
+
+        return fast;
     }
+};
 
-    if (fast == NULL || fast->next == NULL)
-        return NULL;
-
-    slow = head;
-    while (slow != fast) {
-        fast = fast->next;
-        slow = slow->next;
-    }
-
-    return fast;
-}
 
 int main(int argc, char const* argv[])
 {
+    Solution solution;
     struct ListNode* head;
     struct ListNode* ans;
     struct ListNode node1(1);
@@ -45,9 +49,9 @@ int main(int argc, char const* argv[])
     head = &node1;
     node1.next = &node2;
     node2.next = &node3;
-    node3.next = &node4;
+    node3.next = &node1;
 
-    ans = detectCycle(head);
+    ans = solution.detectCycle(head);
     if (ans != NULL)
         cout << ans->val << endl;
     else
