@@ -8,39 +8,62 @@ struct ListNode {
     ListNode(int x): val(x), next(NULL) {}
 };
 
-ListNode* deleteDuplicates(ListNode *head)
-{
-    struct ListNode fakeHead(0);
-    struct ListNode *current = head, *newList = &fakeHead;
-    bool isRepeat = false;
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode *head) {
+        struct ListNode fakeHead(0);
+        struct ListNode *current = head, *newList = &fakeHead;
+        bool isRepeat = false;
 
-    if (head == NULL)
-        return head;
+        if (head == NULL)
+            return head;
 
-    while (current->next != NULL) {
-        if (current->val == current->next->val) {
-            current->next = current->next->next;
-            isRepeat = true;
-        } else if (isRepeat == true) {
-            current = current->next;
-            isRepeat = false;
-        } else {
-            newList->next = current;
-            newList = current;
-            current = current->next;
+        while (current->next != NULL) {
+            if (current->val == current->next->val) {
+                current->next = current->next->next;
+                isRepeat = true;
+            } else if (isRepeat == true) {
+                current = current->next;
+                isRepeat = false;
+            } else {
+                newList->next = current;
+                newList = newList->next;
+                current = current->next;
+                newList->next = NULL;
+            }
         }
+
+        if (isRepeat == false)
+            newList->next = current;
+
+        return fakeHead.next;
     }
 
-    if (isRepeat == true)
-        newList->next = NULL;
-    else
-        newList->next = current;
+    ListNode* deleteDuplicates2(ListNode *head) {
+        struct ListNode fakeHead(0);
+        struct ListNode *cur;
+        struct ListNode *newList = &fakeHead;
 
-    return fakeHead.next;
-}
+        while (head != NULL) {
+            for (cur = head->next; cur != NULL && cur->val == head->val; cur = cur->next);
+
+            if (head->next == NULL || head->next == cur) {
+                newList->next = head;
+                newList = newList->next;
+                newList->next = NULL;
+            }
+
+            head = cur;
+        }
+
+        return fakeHead.next;
+    }
+};
+
 
 int main(int argc, char const* argv[])
 {
+    Solution solution;
     struct ListNode *head, *current;
     struct ListNode node1(1);
     struct ListNode node2(1);
@@ -68,7 +91,7 @@ int main(int argc, char const* argv[])
     }
     cout << endl;
 
-    current = deleteDuplicates(head);
+    current = solution.deleteDuplicates2(head);
 
     /* after */
     while (current != NULL) {
