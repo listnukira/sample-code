@@ -11,15 +11,9 @@ struct ListNode {
 class Solution {
 public:
     ListNode *mergeTwoLists(ListNode *l1, ListNode *l2) {
-        if (l1 == NULL)
-            return l2;
-
-        if (l2 == NULL)
-            return l1;
-
-
         ListNode *fakeHead = new ListNode(0);
         ListNode *head = fakeHead;
+
         while (l1 != NULL && l2 != NULL) {
             if (l2->val > l1->val) {
                 fakeHead->next = l1;
@@ -32,11 +26,7 @@ public:
             fakeHead = fakeHead->next;
         }
 
-        if (l1 == NULL)
-            fakeHead->next = l2;
-
-        if (l2 == NULL)
-            fakeHead->next = l1;
+        fakeHead->next = (l1 == NULL) ? l2 : l1;
 
         return head->next;
     }
